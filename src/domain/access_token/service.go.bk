@@ -1,4 +1,4 @@
-package access_token
+/*package access_token
 
 import (
 	"github.com/toan267/bookstore_oauth-api/src/utils/errors"
@@ -56,3 +56,4 @@ func (s *service) UpdateExpirationTime(at AccessToken) *errors.RestErr {
 	}
 	return s.repository.UpdateExpirationTime(at)
 }
+*/

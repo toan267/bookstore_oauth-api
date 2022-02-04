@@ -3,7 +3,10 @@ package app
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/toan267/bookstore_oauth-api/src/clients/cassandra"
-	"github.com/toan267/bookstore_oauth-api/src/domain/access_token"
+	"github.com/toan267/bookstore_oauth-api/src/repository/rest"
+	"github.com/toan267/bookstore_oauth-api/src/services/access_token"
+
+	//"github.com/toan267/bookstore_oauth-api/src/domain/access_token"
 	"github.com/toan267/bookstore_oauth-api/src/http"
 	"github.com/toan267/bookstore_oauth-api/src/repository/db"
 )
@@ -17,10 +20,11 @@ func StartApplication() {
 	//}
 	//defer session.Close()
 	defer cassandra.GetSession().Close()
-	atService := access_token.NewService(db.NewRepository())
-	atHandler := http.NewHandler(atService)
+	//atService := access_token.NewService(db.NewRepository())
+	//atHandler := http.NewHandler(atService)
+	atHandler := http.NewAccessTokenHandler(access_token.NewService(rest.NewRestUsersRepository(), db.NewRepository()))
 
 	router.GET("/oauth/accecss_token/:access_token_id", atHandler.GetById)
 	router.POST("/oauth/accecss_token", atHandler.Create)
-	router.Run(":8080")
+	router.Run(":8081")
 }
